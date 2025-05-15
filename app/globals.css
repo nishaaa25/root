@@ -39,9 +39,12 @@ body {
   font-family: "Quicksand", sans-serif;
 }
 
-nav, h1, .desc-text {
+nav,
+h1,
+.desc-text {
   font-family: "Organetto", sans-serif;
 }
-.container .img{
-     clip-path: "inset(50% 33% 49% 33%)",
+
+.img {
+  clip-path: inset(50% 33% 49% 33%);
 }

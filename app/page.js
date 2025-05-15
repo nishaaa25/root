@@ -13,7 +13,8 @@ export default function Home() {
   useLenis();
 
   useGSAP(() => {
-    const tl = gsap.timeline();
+    const tl = gsap.timeline(
+    );
 
     tl.fromTo(
       ".img",
