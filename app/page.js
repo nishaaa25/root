@@ -1,103 +1,166 @@
+"use client";
+
+import Navbar from "@/components/Navbar";
+import useLenis from "@/hooks/useLenis";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger"; // ✅ Correct ScrollTrigger import
 import Image from "next/image";
 
-export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+gsap.registerPlugin(ScrollTrigger);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+export default function Home() {
+  useLenis();
+
+  useGSAP(() => {
+    const tl = gsap.timeline();
+
+    tl.fromTo(
+      ".img",
+      {
+        clipPath: "inset(50% 33% 49% 33%)",
+      },
+      {
+        clipPath: "inset(0% 33% 0% 33%)",
+        duration: 2,
+        ease: "expo.inOut",
+        delay: 1,
+      }
+    )
+      .from(
+        ".main-text h1.middle",
+        {
+          y: "-50vh",
+          duration: 2,
+          ease: "expo.inOut",
+        },
+        "<"
+      )
+      .from(
+        ".container nav",
+        {
+          y: "-100px",
+          duration: 2,
+          ease: "power2.inOut",
+        },
+        "<"
+      )
+      .from(
+        ".main-text h1.end",
+        {
+          y: "50vh",
+          duration: 2,
+          ease: "expo.inOut",
+        },
+        "<0.1"
+      )
+      .from(
+        ".desc-text",
+        {
+          y: "100px",
+          duration: 2,
+          ease: "power2.inOut",
+        },
+        "<"
+      );
+
+    const tl2 = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".hero-cont",
+        start: "top 0%",
+        end: "bottom 10%",
+        scrub: 2,
+        pin: true,
+      },
+    });
+
+    tl2
+      .fromTo(
+        ".bg-img",
+        {
+          scale: 1,
+        },
+        {
+          scale: 1.5,
+        }
+      )
+      .fromTo(
+        ".img",
+        {
+          clipPath: "inset(0% 33% 0% 33%)",
+        },
+        {
+          clipPath: "inset(0% 0% 0% 0%)",
+        },
+        "<"
+      )
+      .to(
+        "h1.left",
+        {
+          x: -250,
+        },
+        "<0.1"
+      )
+      .to(
+        "h1.right",
+        {
+          x: 250,
+        },
+        "<"
+      )
+      .to(
+        "h1.one",
+        {
+          x: "50%",
+        },
+        "<"
+      )
+      .to(
+        "h1.two",
+        {
+          x: "-50%",
+        },
+        "<"
+      ).to(".sub-text", {
+        opacity: 1
+      })
+  }, []);
+
+  return (
+    <div className="w-full relative container">
+      <Navbar />
+      <div className="w-full relative hero-cont h-[100vh]">
+        <div className="relative w-full h-screen pt-[15vh]">
+          <div className="main-text absolute  z-10 w-full h-full">
+            <div className="h-[70vh] flex items-center justify-center overflow-hidden w-8/12 mx-auto leading-[15vw] text-[15vw] relative">
+              <h1 className="end left">R</h1>
+              <h1 className="middle one">O</h1>
+              <h1 className="middle two">O</h1>
+              <h1 className="end right">T</h1>
+            </div>
+            <p className="w-[30%] absolute text-white text-sm leading-5 lowercase left-15  bottom-[35vh] sub-text opacity-0">
+              Root Studio isn&apos;t just a photography studio; it&apos;s a
+              place where every frame tells a story, deeply connected to its
+              origins. Inspired by the raw, unfiltered beauty of nature and the
+              interconnectedness of life, Root Studio believes that every moment
+              has depth—just like the roots of a great tree.
+            </p>
+          </div>
+          <div className="w-full relative overflow-hidden">
+            <div className="w-full relative mx-auto h-[70vh] img">
+              <Image
+                src="/img5.jpg"
+                alt="img.png"
+                fill
+                className="object-cover bg-img"
+              />
+            </div>
+          </div>
+          <p className="text-center text-lg font-bold absolute w-full z-10 pt-9 desc-text">
+            WELCOME
+          </p>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
     </div>
   );
 }
