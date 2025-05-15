@@ -13,19 +13,24 @@ export default function Home() {
   useLenis();
 
   useGSAP(() => {
-    const tl = gsap.timeline(
-    );
+    const tl = gsap.timeline({
+      onStart: () => {
+        // Make main-text visible when animation starts
+        gsap.set(".main-text", { opacity: 1 });
+      }
+    });
 
     tl.fromTo(
       ".img",
       {
         clipPath: "inset(50% 33% 49% 33%)",
+        opacity: 0.8,
       },
       {
         clipPath: "inset(0% 33% 0% 33%)",
         duration: 2,
+        opacity:1,
         ease: "expo.inOut",
-        delay: 1,
       }
     )
       .from(
@@ -37,10 +42,15 @@ export default function Home() {
         },
         "<"
       )
-      .from(
+      .fromTo(
         ".container nav",
         {
           y: "-100px",
+          opacity: 0,
+        },
+        {
+          y: "0",
+          opacity: 1,
           duration: 2,
           ease: "power2.inOut",
         },
@@ -55,10 +65,15 @@ export default function Home() {
         },
         "<0.1"
       )
-      .from(
+      .fromTo(
         ".desc-text",
         {
           y: "100px",
+          opacity: 0,
+        },
+        {
+          y: "0",
+          opacity: 1,
           duration: 2,
           ease: "power2.inOut",
         },

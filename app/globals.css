@@ -47,4 +47,22 @@ h1,
 
 .img {
   clip-path: inset(50% 33% 49% 33%);
+  opacity: 0;
+}
+
+/* Initial state for animations */
+.main-text {
+  opacity: 0;
+}
+
+.container nav {
+  opacity: 0;
+}
+
+.desc-text {
+  opacity: 0;
+}
+
+.sub-text {
+  opacity: 0;
 }
